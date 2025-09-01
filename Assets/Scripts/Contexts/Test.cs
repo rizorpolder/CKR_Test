@@ -27,11 +27,8 @@ namespace Contexts
 		private void UpdateView(Response<WeatherRequestResponseBody> obj)
 		{
 			var temp = obj.Data.WeatherData;
-		}
-
-		private void UpdateView(WeatherRequestResponseBody obj)
-		{
-			var temp = obj.WeatherData;
+			//получили данные
+			// нужно запросить все картинки по ссылкам и создать "словарь", чтоб не грузить все картинки по 10 раз
 		}
 
 		private void OnButtonClickHandler()
@@ -39,8 +36,5 @@ namespace Contexts
 			_networkManager.Add(_request);
 		}
 
-		private void UpdateView(WeatherData weather)
-		{
-		}
 	}
 }
