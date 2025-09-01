@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+
+namespace Data
+{
+
+
+
+	[Serializable]
+	public class WeatherData
+	{
+		public WeatherProps properties;
+	}
+
+	[Serializable]
+	public class WeatherProps
+	{
+		public List<WeatherPeriod> periods;
+	}
+
+	[Serializable]
+	public class WeatherPeriod
+	{
+		public string name;
+		public string temperature;
+		public string temperatureUnit;
+		public string icon;
+	}
+}
