@@ -23,6 +23,7 @@ namespace Managers.Weather
 
 		private void Start()
 		{
+			_view.Initialize();
 			_iconsCache = new WeatherIconsCache();
 			_weatherRequest = new GetWeatherRequest();
 			_weatherRequest.OnResponse += UpdateView;
@@ -78,7 +79,7 @@ namespace Managers.Weather
 
 			_timer?.Dispose();
 			_networkManager?.Remove(_weatherRequest);
-			_view.Reset();
+			_view.ResetState();
 		}
 	}
 }

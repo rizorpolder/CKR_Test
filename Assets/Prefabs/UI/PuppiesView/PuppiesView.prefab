@@ -420,6 +420,7 @@ MonoBehaviour:
   _initializeItemsCount: 0
   _items:
   - {fileID: 2678402643055194739}
+  _loadingView: {fileID: 3462362543564803244}
 --- !u!1 &9025670677796686210
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,11 +454,11 @@ RectTransform:
   - {fileID: 4180958753527471562}
   m_Father: {fileID: 7960564686488616796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 1000, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5887253869746806430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,6 +757,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77095aff7e26e2f4da599d24a68be50b, type: 3}
+--- !u!1 &3462362543564803244 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8474127072013267947, guid: 77095aff7e26e2f4da599d24a68be50b, type: 3}
+  m_PrefabInstance: {fileID: 5014456708438916935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &9105745608455729654 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4307964270613679793, guid: 77095aff7e26e2f4da599d24a68be50b, type: 3}

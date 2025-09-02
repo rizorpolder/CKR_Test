@@ -10,6 +10,8 @@ namespace Managers
 	{
 		[SerializeField] List<ViewWrapper> _views;
 
+		private int _enabledView = 0;
+
 		private void Start()
 		{
 			for (var index = 0; index < _views.Count; index++)
@@ -24,11 +26,11 @@ namespace Managers
 
 		private void EnableView(int index)
 		{
-			foreach (var view in _views)
-			{
-				view.Disable();
-			}
+			if (_enabledView == index)
+				return;
 
+			_views[_enabledView].Disable();
+			_enabledView = index;
 			_views[index].Enable();
 		}
 

@@ -15,7 +15,7 @@ namespace Common
 		public T Prefab => prefab;
 		public int ActiveItems => _items.Count - _freeElements.Count;
 
-		public void InitializePool()
+		protected void InitializePool()
 		{
 			ResetPool();
 

@@ -9,7 +9,7 @@ namespace UI.WeatherView
 	{
 		[SerializeField] private GameObject _loadingView;
 
-		private void Start()
+		public void Initialize()
 		{
 			InitializePool();
 		}
@@ -28,7 +28,7 @@ namespace UI.WeatherView
 				_loadingView.SetActive(false);
 		}
 
-		public void Reset()
+		public void ResetState()
 		{
 			ResetPool();
 			_loadingView.SetActive(true);

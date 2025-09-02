@@ -15,18 +15,18 @@ public class NetworkManager
 			Run();
 	}
 
-	public bool Remove(ARequest request)
+	public void Remove(ARequest request)
 	{
 		var result = _queue.Remove(request);
+		if (!result)
+			return;
 
 		if (_runningRequest == null || !_runningRequest.Equals(request))
-			return result;
+			return;
 
 		_runningRequest.Abort();
 		_runningRequest = null;
 		Run();
-
-		return result;
 	}
 
 	public void Terminate()
@@ -35,7 +35,7 @@ public class NetworkManager
 		_runningRequest.Abort();
 	}
 
-	private void Run()
+	private async void Run()
 	{
 		if (_isQueueEmpty)
 			return;
@@ -50,8 +50,8 @@ public class NetworkManager
 		_queue.RemoveAt(0);
 
 		request.AddReceivedHandler(OnRequestCompleted);
-		request.Make();
 		_runningRequest = request;
+		request.Make();
 	}
 
 	private void OnRequestCompleted(ARequest obj)
