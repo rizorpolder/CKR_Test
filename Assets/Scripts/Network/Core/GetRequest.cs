@@ -30,7 +30,7 @@ namespace Network.RestApi
 			{
 				data = ParseResponseData(request.downloadHandler.data ?? Array.Empty<byte>());
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				// ignore
 			}

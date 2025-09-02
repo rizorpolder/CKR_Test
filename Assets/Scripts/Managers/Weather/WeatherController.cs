@@ -1,4 +1,5 @@
 using System;
+using Managers.Base;
 using Network;
 using Network.ApiData.Weather;
 using Network.RestApi;
@@ -7,9 +8,9 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace Managers
+namespace Managers.Weather
 {
-	public class WeatherController : MonoBehaviour
+	public class WeatherController : ABaseController
 	{
 		[Inject] private NetworkManager _networkManager;
 
@@ -25,9 +26,6 @@ namespace Managers
 			_iconsCache = new WeatherIconsCache();
 			_weatherRequest = new GetWeatherRequest();
 			_weatherRequest.OnResponse += UpdateView;
-
-			SendRequest();
-			StartTimer();
 		}
 
 		private void StartTimer()
@@ -67,10 +65,20 @@ namespace Managers
 			_view.UpdateView(periods);
 		}
 
-		private void OnDestroy()
+		public override void Enable()
 		{
+			_view.gameObject.SetActive(true);
+			SendRequest();
+			StartTimer();
+		}
+
+		public override void Disable()
+		{
+			_view.gameObject.SetActive(false);
+
 			_timer?.Dispose();
 			_networkManager?.Remove(_weatherRequest);
+			_view.Reset();
 		}
 	}
 }

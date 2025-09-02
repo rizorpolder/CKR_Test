@@ -27,5 +27,11 @@ namespace UI.WeatherView
 			if (_loadingView.activeSelf)
 				_loadingView.SetActive(false);
 		}
+
+		public void Reset()
+		{
+			ResetPool();
+			_loadingView.SetActive(true);
+		}
 	}
 }

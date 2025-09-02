@@ -18,7 +18,13 @@ public class NetworkManager
 	public bool Remove(ARequest request)
 	{
 		var result = _queue.Remove(request);
-		if (result) request.Abort();
+
+		if (_runningRequest == null || !_runningRequest.Equals(request))
+			return result;
+
+		_runningRequest.Abort();
+		_runningRequest = null;
+		Run();
 
 		return result;
 	}
@@ -34,16 +40,18 @@ public class NetworkManager
 		if (_isQueueEmpty)
 			return;
 
-		if (_queue.Count > 0)
-			if (_runningRequest == null)
-			{
-				var request = _queue[0];
-				_queue.RemoveAt(0);
+		if (_queue.Count <= 0)
+			return;
 
-				request.AddReceivedHandler(OnRequestCompleted);
-				request.Make();
-				_runningRequest = request;
-			}
+		if (_runningRequest != null)
+			return;
+
+		var request = _queue[0];
+		_queue.RemoveAt(0);
+
+		request.AddReceivedHandler(OnRequestCompleted);
+		request.Make();
+		_runningRequest = request;
 	}
 
 	private void OnRequestCompleted(ARequest obj)
