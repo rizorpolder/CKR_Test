@@ -1,6 +1,7 @@
+using Managers;
 using Network.ApiData.Dogs;
-using Network.ApiData.Weather;
 using Network.RestApi;
+using UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -11,28 +12,23 @@ namespace Contexts
 	{
 		[SerializeField] private Button _button;
 
-		[Inject]
-		private NetworkManager _networkManager;
-
-		private GetPuppiesListRequest _request;
+		[Inject] WindowsController _windowsController;
 
 		private void Start()
 		{
 			_button.onClick.AddListener(OnButtonClickHandler);
-			_request = new GetPuppiesListRequest();
-			_request.OnResponse += UpdateView;
-		}
-
-		private void UpdateView(Response<PuppiesResponseBody> obj)
-		{
-			var temp = obj.Data.PuppiesData;
-			//получили данные
-			// нужно запросить все картинки по ссылкам и создать "словарь", чтоб не грузить все картинки по 10 раз
 		}
 
 		private void OnButtonClickHandler()
 		{
-			_networkManager.Add(_request);
+			_windowsController.Show(WindowType.InfoPupup,
+				window =>
+				{
+					if (window is InfoPopup infoPopup)
+					{
+						infoPopup.Initialize("Test", "Test");
+					}
+				});
 		}
 	}
 }

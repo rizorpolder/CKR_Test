@@ -41,13 +41,10 @@ namespace Managers
 		private void SendRequest()
 		{
 			_networkManager.Add(_weatherRequest);
-			Debug.Log("Request send");
 		}
 
 		private async void UpdateView(Response<WeatherResponseBody> obj)
 		{
-			Debug.Log("Response received");
-
 			if (!obj.IsSuccess)
 				return; // TODO if server down
 

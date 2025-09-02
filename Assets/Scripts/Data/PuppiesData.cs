@@ -4,9 +4,15 @@ using System.Collections.Generic;
 namespace Data
 {
 	[Serializable]
-	public class PuppiesData
+	public class PuppiesDataList
 	{
 		public List<PuppiesEntry> data;
+	}
+
+	[Serializable]
+	public class PuppiesData
+	{
+		public PuppiesEntry data;
 	}
 
 	[Serializable]

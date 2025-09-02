@@ -1,12 +1,14 @@
 using Network.ApiData.Dogs;
-using Network.RestApi;
 
-public class GetPuppiesListRequest : GetRequest<PuppiesResponseBody>
+namespace Network.RestApi
 {
-	protected override string Uri => "https://dogapi.dog/api/v2/breeds";
-
-	protected override PuppiesResponseBody ParseResponseData(byte[] data)
+	public class GetPuppiesListRequest : GetRequest<PuppiesListResponseBody>
 	{
-		return new PuppiesResponseBody().ParseFrom(data);
+		protected override string Uri => "https://dogapi.dog/api/v2/breeds";
+
+		protected override PuppiesListResponseBody ParseResponseData(byte[] data)
+		{
+			return new PuppiesListResponseBody().ParseFrom(data);
+		}
 	}
 }
