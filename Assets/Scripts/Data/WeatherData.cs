@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data
 {
@@ -21,6 +22,7 @@ namespace Data
 	[Serializable]
 	public class WeatherPeriod
 	{
+		public Sprite sprite;
 		public string name;
 		public string temperature;
 		public string temperatureUnit;

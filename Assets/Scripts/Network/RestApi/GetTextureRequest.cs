@@ -1,16 +1,12 @@
 using Cysharp.Threading.Tasks;
-using Network.RestApi;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Network
 {
-	public class GetTextureRequest<TData> : ARequest
+	public class GetTextureRequest
 	{
-		protected override string Method => "GET";
-
 		private string _url;
-		protected override string Uri => _url;
 
 		private UnityWebRequest _textureRequest;
 
@@ -19,7 +15,7 @@ namespace Network
 			_url = textureUrl;
 		}
 
-		public override async void Make()
+		public async UniTask<Texture2D> Make()
 		{
 			_textureRequest = UnityWebRequestTexture.GetTexture(_url);
 			await _textureRequest.SendWebRequest();
@@ -30,19 +26,14 @@ namespace Network
 			}
 			else
 			{
-				Texture2D texture = ((DownloadHandlerTexture)_textureRequest.downloadHandler).texture;
-				// if (targetImage != null)
-				// {
-				// 	targetImage.texture = texture;
-				// }
-				// else
-				// {
-				// 	Debug.LogWarning("Target RawImage not assigned.");
-				// }
+				var texture = ((DownloadHandlerTexture) _textureRequest.downloadHandler).texture;
+				return texture;
 			}
+
+			return null;
 		}
 
-		public override void Abort()
+		public void Abort()
 		{
 			_textureRequest?.Abort();
 		}

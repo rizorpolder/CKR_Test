@@ -8,12 +8,13 @@ namespace UI.WeatherView
 	{
 		public void Initialize(List<WeatherPeriod> weatherPeriods)
 		{
-			this.InitializePool();
+			InitializePool();
 
 			foreach (var period in weatherPeriods)
 			{
 				var item = GetItem();
-				item.SetDescription(period.name, period.temperature, period.temperatureUnit); //.SetIcon();
+				item.SetIcon(period.sprite)
+					.SetDescription(period.name, period.temperature, period.temperatureUnit);
 			}
 		}
 	}
