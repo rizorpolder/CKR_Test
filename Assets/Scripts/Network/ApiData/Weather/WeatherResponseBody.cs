@@ -4,15 +4,15 @@ using Newtonsoft.Json;
 
 namespace Network.ApiData.Weather
 {
-	public class WeatherRequestResponseBody : IParse<WeatherRequestResponseBody>
+	public class WeatherResponseBody : IParse<WeatherResponseBody>
 	{
 		public WeatherData WeatherData;
 
-		public WeatherRequestResponseBody ParseFrom(byte[] data)
+		public WeatherResponseBody ParseFrom(byte[] data)
 		{
 			var str = Encoding.UTF8.GetString(data);
 			var result = JsonConvert.DeserializeObject<WeatherData>(str);
-			return new WeatherRequestResponseBody {WeatherData = result};
+			return new WeatherResponseBody {WeatherData = result};
 		}
 	}
 }

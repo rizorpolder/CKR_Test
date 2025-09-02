@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Common;
 
-public class PuppiesView : MonoBehaviour
+namespace UI.PuppiesView
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public class PuppiesView : ObjectsPool<PuppiesEntry>
+	{
+		public void Initialize()
+		{
+			InitializePool();
+		}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		private void Func()
+		{
+			var items = this.GetActiveItems();
+			foreach (var puppiesEntry in items)
+			{
+			}
+		}
+	}
 }

@@ -44,7 +44,7 @@ namespace Managers
 			Debug.Log("Request send");
 		}
 
-		private async void UpdateView(Response<WeatherRequestResponseBody> obj)
+		private async void UpdateView(Response<WeatherResponseBody> obj)
 		{
 			Debug.Log("Response received");
 
