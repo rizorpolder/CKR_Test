@@ -15,7 +15,8 @@ namespace UI.WeatherView
 			return this;
 		}
 
-		public WeatherItem SetDescription(string day, string temperature, string unit) // можно локализационные ключи прокидывать
+		public WeatherItem
+			SetDescription(string day, string temperature, string unit) // можно локализационные ключи прокидывать
 		{
 			_description.text = $"{day} - {temperature} {unit}";
 			return this;

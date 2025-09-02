@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace Data
 {
-
-
-
 	[Serializable]
 	public class WeatherData
 	{

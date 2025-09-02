@@ -2,8 +2,8 @@ namespace Network.RestApi
 {
 	public class Response<TResponseData>
 	{
-		public bool IsSuccess;
 		public TResponseData Data;
+		public bool IsSuccess;
 
 		private Response()
 		{

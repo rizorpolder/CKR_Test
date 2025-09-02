@@ -7,12 +7,12 @@ namespace Common
 	{
 		[SerializeField] private Transform _poolRoot;
 		[SerializeField] private T prefab;
-		[SerializeField] private int _initializeItemsCount = 0;
+		[SerializeField] private int _initializeItemsCount;
 		[SerializeField] private List<T> _items;
 
-		public T Prefab => prefab;
+		private readonly Queue<T> _freeElements = new();
 
-		private Queue<T> _freeElements = new Queue<T>();
+		public T Prefab => prefab;
 		public int ActiveItems => _items.Count - _freeElements.Count;
 
 		public void InitializePool()
@@ -35,7 +35,7 @@ namespace Common
 
 		private T CreateItem()
 		{
-			var item = Instantiate<T>(prefab, _poolRoot);
+			var item = Instantiate(prefab, _poolRoot);
 			item.gameObject.SetActive(false);
 			return item;
 		}
@@ -67,10 +67,7 @@ namespace Common
 		{
 			_freeElements.Clear();
 
-			foreach (var item in _items)
-			{
-				ReturnToPool(item);
-			}
+			foreach (var item in _items) ReturnToPool(item);
 		}
 	}
 }

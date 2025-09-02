@@ -7,9 +7,9 @@ namespace Network.RestApi
 	public abstract class GetRequest<TResponseData> : ARequest
 	{
 		private UnityWebRequest _request;
+		protected override string Method => "GET";
 
 		public event Action<Response<TResponseData>> OnResponse = r => { };
-		protected override string Method => "GET";
 
 		public override async void Make()
 		{
@@ -23,10 +23,7 @@ namespace Network.RestApi
 
 		private Response<TResponseData> ParseResponse(UnityWebRequest request)
 		{
-			if (request.result != UnityWebRequest.Result.Success)
-			{
-				return Response<TResponseData>.Failed();
-			}
+			if (request.result != UnityWebRequest.Result.Success) return Response<TResponseData>.Failed();
 
 			var data = default(TResponseData);
 			try

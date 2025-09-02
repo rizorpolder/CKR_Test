@@ -3,7 +3,7 @@ using Network.RestApi;
 
 public class NetworkManager
 {
-	private List<ARequest> _queue = new List<ARequest>();
+	private readonly List<ARequest> _queue = new();
 
 	private ARequest _runningRequest;
 	private bool _isQueueEmpty => _queue.Count == 0;
@@ -18,10 +18,7 @@ public class NetworkManager
 	public bool Remove(ARequest request)
 	{
 		var result = _queue.Remove(request);
-		if (result)
-		{
-			request.Abort();
-		}
+		if (result) request.Abort();
 
 		return result;
 	}
@@ -38,7 +35,6 @@ public class NetworkManager
 			return;
 
 		if (_queue.Count > 0)
-		{
 			if (_runningRequest == null)
 			{
 				var request = _queue[0];
@@ -48,7 +44,6 @@ public class NetworkManager
 				request.Make();
 				_runningRequest = request;
 			}
-		}
 	}
 
 	private void OnRequestCompleted(ARequest obj)

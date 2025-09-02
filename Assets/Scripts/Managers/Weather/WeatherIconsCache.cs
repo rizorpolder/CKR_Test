@@ -1,33 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-using UnityEditor;
 using UnityEngine;
 
 namespace Managers
 {
 	public class WeatherIconsCache
 	{
-		private WeatherNode _root;
-
-		public WeatherIconsCache()
-		{
-			_root = new WeatherNode("root");
-		}
+		private readonly WeatherNode _root = new("root");
 
 		public void ParseUrl(string url, out WeatherNode node)
 		{
-			Uri uriResult = new Uri(url);
+			var uriResult = new Uri(url);
 			var tokens = uriResult.LocalPath.Split('/', StringSplitOptions.RemoveEmptyEntries);
 			var slice = tokens[2..];
 
 			node = _root;
 
-			foreach (var token in slice)
-			{
-				TryGetNode(node, token, out node);
-			}
+			foreach (var token in slice) TryGetNode(node, token, out node);
 		}
 
 		private void TryGetNode(WeatherNode root, string token, out WeatherNode node)
@@ -41,31 +30,27 @@ namespace Managers
 
 		public class WeatherNode
 		{
-			private string _name;
-			public string Name => _name;
-
-			private Sprite _spriteIcon;
-			public Sprite SpriteIcon => _spriteIcon;
+			private readonly Lazy<List<WeatherNode>> children = new(() => new List<WeatherNode>());
 
 			public WeatherNode(string name)
 			{
-				_name = name;
+				Name = name;
 			}
 
-			Lazy<List<WeatherNode>> children = new(() => new List<WeatherNode>());
+			public string Name { get; }
+
+			public Sprite SpriteIcon { get; private set; }
 
 			public bool CheckWeatherNode(string name, out WeatherNode node)
 			{
 				node = null;
 
 				foreach (var child in children.Value)
-				{
-					if (child._name.Equals(name))
+					if (child.Name.Equals(name))
 					{
 						node = child;
 						return true;
 					}
-				}
 
 				return false;
 			}
@@ -73,12 +58,12 @@ namespace Managers
 			public void SetSprite(Texture2D tex)
 			{
 				var sprite = CreateSpriteFromTexture(tex);
-				_spriteIcon = sprite;
+				SpriteIcon = sprite;
 			}
 
 			private Sprite CreateSpriteFromTexture(Texture2D texture)
 			{
-				Sprite newSprite = Sprite.Create(texture,
+				var newSprite = Sprite.Create(texture,
 					new Rect(0, 0, texture.width, texture.height),
 					new Vector2(0f, 0f));
 				return newSprite;

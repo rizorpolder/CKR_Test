@@ -4,9 +4,9 @@ namespace Network.RestApi
 {
 	public abstract class ARequest
 	{
-		protected event Action<ARequest> onResponseReceived;
 		protected abstract string Method { get; }
 		protected abstract string Uri { get; }
+		protected event Action<ARequest> onResponseReceived;
 		public abstract void Make();
 
 		public abstract void Abort();

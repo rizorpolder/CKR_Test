@@ -1,4 +1,3 @@
-using System;
 using Network;
 using Network.ApiData.Weather;
 using Network.RestApi;
@@ -10,7 +9,7 @@ namespace Managers
 {
 	public class WeatherController : MonoBehaviour
 	{
-		[Inject] NetworkManager _networkManager;
+		[Inject] private NetworkManager _networkManager;
 
 		[SerializeField] private WeatherView _view;
 
@@ -36,7 +35,7 @@ namespace Managers
 
 			foreach (var period in periods)
 			{
-				_iconsCache.ParseUrl(period.icon, out WeatherIconsCache.WeatherNode node);
+				_iconsCache.ParseUrl(period.icon, out var node);
 
 				if (!node.SpriteIcon)
 				{

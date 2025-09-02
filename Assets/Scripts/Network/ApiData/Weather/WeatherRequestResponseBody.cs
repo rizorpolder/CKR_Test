@@ -1,5 +1,6 @@
 using System.Text;
 using Data;
+using Newtonsoft.Json;
 
 namespace Network.ApiData.Weather
 {
@@ -10,8 +11,8 @@ namespace Network.ApiData.Weather
 		public WeatherRequestResponseBody ParseFrom(byte[] data)
 		{
 			var str = Encoding.UTF8.GetString(data);
-			var result = Newtonsoft.Json.JsonConvert.DeserializeObject<WeatherData>(str);
-			return new WeatherRequestResponseBody() {WeatherData = result};
+			var result = JsonConvert.DeserializeObject<WeatherData>(str);
+			return new WeatherRequestResponseBody {WeatherData = result};
 		}
 	}
 }

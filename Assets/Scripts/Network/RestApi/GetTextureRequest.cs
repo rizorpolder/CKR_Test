@@ -6,9 +6,8 @@ namespace Network
 {
 	public class GetTextureRequest
 	{
-		private string _url;
-
 		private UnityWebRequest _textureRequest;
+		private readonly string _url;
 
 		public GetTextureRequest(string textureUrl)
 		{

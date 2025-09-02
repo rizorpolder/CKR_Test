@@ -1,5 +1,3 @@
-using System;
-using Data;
 using Network.ApiData.Weather;
 using Network.RestApi;
 using UnityEngine;
@@ -10,12 +8,12 @@ namespace Contexts
 {
 	public class Test : MonoBehaviour
 	{
+		[SerializeField] private Button _button;
+
 		[Inject]
 		private NetworkManager _networkManager;
 
-		[SerializeField] private Button _button;
-
-		GetWeatherRequest _request;
+		private GetWeatherRequest _request;
 
 		private void Start()
 		{
@@ -35,6 +33,5 @@ namespace Contexts
 		{
 			_networkManager.Add(_request);
 		}
-
 	}
 }
