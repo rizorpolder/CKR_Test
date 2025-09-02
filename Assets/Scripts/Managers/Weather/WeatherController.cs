@@ -1,7 +1,9 @@
+using System;
 using Network;
 using Network.ApiData.Weather;
 using Network.RestApi;
 using UI.WeatherView;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -16,18 +18,36 @@ namespace Managers
 		private WeatherIconsCache _iconsCache;
 		private GetWeatherRequest _weatherRequest;
 
+		private IDisposable _timer;
+
 		private void Start()
 		{
 			_iconsCache = new WeatherIconsCache();
-			//TODO Подумать может на каждую вкладку создавать свое поведение
-
 			_weatherRequest = new GetWeatherRequest();
 			_weatherRequest.OnResponse += UpdateView;
+
+			SendRequest();
+			StartTimer();
+		}
+
+		private void StartTimer()
+		{
+			_timer = Observable.Interval(TimeSpan.FromSeconds(5))
+				.Subscribe(
+					l => { SendRequest(); },
+					onCompleted: StartTimer);
+		}
+
+		private void SendRequest()
+		{
 			_networkManager.Add(_weatherRequest);
+			Debug.Log("Request send");
 		}
 
 		private async void UpdateView(Response<WeatherRequestResponseBody> obj)
 		{
+			Debug.Log("Response received");
+
 			if (!obj.IsSuccess)
 				return; // TODO if server down
 
@@ -47,7 +67,13 @@ namespace Managers
 				period.sprite = node.SpriteIcon;
 			}
 
-			_view.Initialize(periods);
+			_view.UpdateView(periods);
+		}
+
+		private void OnDestroy()
+		{
+			_timer?.Dispose();
+			_networkManager?.Remove(_weatherRequest);
 		}
 	}
 }
