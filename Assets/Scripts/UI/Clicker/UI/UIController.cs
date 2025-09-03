@@ -65,7 +65,7 @@ namespace UI.Clicker.UI
 			_particles.Emit(10);
 			PlayButtonAnimation();
 			_managerAudio.PlayAudioClip(TAudio.coin.ToString());
-			_currencyPool.Emit();
+			_currencyPool.Emit(_clickerData.CurrencyReward);
 		}
 
 		// beware of magic numbers (:

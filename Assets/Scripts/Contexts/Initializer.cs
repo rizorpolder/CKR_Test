@@ -15,7 +15,6 @@ namespace Contexts
 		public override void InstallBindings()
 		{
 			Container.Bind<NetworkManager>().AsSingle();
-			Container.Bind<CooldownManager>().AsSingle();
 			Container.Bind<IClickerListener>().To<ClickerController>().FromInstance(_clickerController);
 			Container.Bind<IClickerCommand>().To<ClickerController>().FromInstance(_clickerController);
 			Container.Bind<IClickerData>().To<ClickerController>().FromInstance(_clickerController);

@@ -19,11 +19,11 @@ namespace Managers.Clicker
 		public event Action OnCurrencyDataChanged;
 		public event Action<bool> OnStateChanged;
 
-		[Inject] private CooldownManager _cooldownManager;
 		[Inject] private UserInitialConfig _userInitialConfig;
 
 		public int UserCurrency => _userData.CurrencyValue;
 		public int UserEnergy => _userData.EnergyValue;
+		public int CurrencyReward => _currencyData.CurrencyPerClick;
 
 		private UserData _userData;
 		private EnergyInitialData _energyData;
@@ -107,9 +107,6 @@ namespace Managers.Clicker
 
 		public override void Disable()
 		{
-			_cooldownManager.RemoveCooldown(COLLECT_KEY);
-			_cooldownManager.RemoveCooldown(ENERGY_KEY);
-
 			_energyTimer?.Dispose();
 			_autoCollectTimer?.Dispose();
 

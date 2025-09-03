@@ -4,5 +4,6 @@ namespace Managers.Clicker
 	{
 		public int UserCurrency { get; }
 		public int UserEnergy { get; }
+		public int CurrencyReward { get; }
 	}
 }

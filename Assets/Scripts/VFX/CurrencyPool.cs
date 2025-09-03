@@ -12,9 +12,11 @@ namespace VFX
 			InitializePool();
 		}
 
-		public void Emit()
+
+		public void Emit(int currencyValue)
 		{
 			var element = GetItem();
+			element.Initialize(currencyValue);
 			element.transform.position = _parent.position;
 			element.OnCompleted += OnAnimationCompleted;
 			element.Play();

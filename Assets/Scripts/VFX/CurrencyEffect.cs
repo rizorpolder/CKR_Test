@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 namespace VFX
@@ -9,10 +10,16 @@ namespace VFX
 		public Action<CurrencyEffect> OnCompleted;
 
 		[SerializeField] private CanvasGroup _canvasGroup;
+		[SerializeField] private TextMeshProUGUI _value;
 
 		private Sequence _tween;
 
 		// beware of magic numbers (:
+
+		public void Initialize(int value)
+		{
+			_value.text = $"+{value.ToString()}";
+		}
 
 		public void Play()
 		{
