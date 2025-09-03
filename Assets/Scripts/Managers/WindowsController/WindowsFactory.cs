@@ -52,6 +52,7 @@ namespace Managers
 			operation.completed += _ =>
 			{
 				window.Window = operation.Result[0].GetComponent<BaseWindow>();
+				window.Window.transform.localPosition = Vector3.zero;
 				_container.Inject(window.Window);
 				callback?.Invoke();
 			};
