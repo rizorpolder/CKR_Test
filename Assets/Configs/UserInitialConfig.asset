@@ -17,7 +17,8 @@ MonoBehaviour:
     _maxEnergyValue: 1000
     _energyRestoreValue: 10
     _energyRestoreTime: 10
+    _energyClickPrice: 1
   _currencyInitialData:
-    _startCurrencyValue: 0
+    _startCurrencyValue: 10
     _currencyPerClick: 1
     _currencyAutocollectTime: 3
