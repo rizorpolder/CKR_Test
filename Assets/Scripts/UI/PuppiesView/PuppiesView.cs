@@ -1,6 +1,6 @@
 using System;
 using Common;
-using Data;
+using Network.ApiData.Dogs;
 using UnityEngine;
 
 namespace UI.PuppiesView

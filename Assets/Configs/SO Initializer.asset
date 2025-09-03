@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SO Initializer
   m_EditorClassIdentifier: 
   _windowsConfig: {fileID: 11400000, guid: 7f6d1440a27de424bbee4b12d552c303, type: 2}
+  userInitialConfig: {fileID: 11400000, guid: 2e7b265f19c82ab4bae4ff565aca1fde, type: 2}

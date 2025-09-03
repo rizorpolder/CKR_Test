@@ -1,5 +1,4 @@
 using System.Text;
-using Data;
 using Newtonsoft.Json;
 
 namespace Network.ApiData.Weather

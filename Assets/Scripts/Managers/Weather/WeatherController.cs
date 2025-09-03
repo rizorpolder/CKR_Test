@@ -1,4 +1,5 @@
 using System;
+using Common;
 using Managers.Base;
 using Network;
 using Network.ApiData.Weather;
@@ -13,13 +14,13 @@ namespace Managers.Weather
 	public class WeatherController : ABaseController
 	{
 		[Inject] private NetworkManager _networkManager;
-
+		[Inject] private CooldownManager _cooldownManager;
 		[SerializeField] private WeatherView _view;
 
 		private WeatherIconsCache _iconsCache;
 		private GetWeatherRequest _weatherRequest;
 
-		private IDisposable _timer;
+		// private IDisposable _timer;
 
 		private void Start()
 		{
@@ -31,10 +32,17 @@ namespace Managers.Weather
 
 		private void StartTimer()
 		{
-			_timer = Observable.Interval(TimeSpan.FromSeconds(5))
-				.Subscribe(
-					l => { SendRequest(); },
-					onCompleted: StartTimer);
+			var delay = TimeSpan.FromSeconds(5);
+			var cooldown = _cooldownManager.SetCooldown("weatherRequest", delay);
+			cooldown.Completed += cd =>
+			{
+				SendRequest();
+				StartTimer();
+			};
+			// _timer = Observable.Interval(TimeSpan.FromSeconds(5))
+			// 	.Subscribe(
+			// 		l => { SendRequest(); },
+			// 		onCompleted: StartTimer);
 		}
 
 		private void SendRequest()
@@ -77,7 +85,7 @@ namespace Managers.Weather
 		{
 			_view.gameObject.SetActive(false);
 
-			_timer?.Dispose();
+			//_timer?.Dispose();
 			_networkManager?.Remove(_weatherRequest);
 			_view.ResetState();
 		}

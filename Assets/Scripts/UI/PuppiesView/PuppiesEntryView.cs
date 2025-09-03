@@ -1,5 +1,5 @@
 using System;
-using Data;
+using Network.ApiData.Dogs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Data
+namespace Network.ApiData.Dogs
 {
 	[Serializable]
 	public class PuppiesDataList

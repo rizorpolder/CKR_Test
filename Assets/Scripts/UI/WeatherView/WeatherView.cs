@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Common;
-using Data;
+using Network.ApiData.Weather;
 using UnityEngine;
 
 namespace UI.WeatherView

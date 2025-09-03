@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace Network.ApiData.Weather
 {
 	[Serializable]
 	public class WeatherData
