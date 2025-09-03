@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "64285ae060c9fe2aeb2a73b076b160939ce3be1a"
     },
+    "com.rizorpolder.audiomanager": {
+      "version": "https://github.com/rizorpolder/packages.git?path=Assets/Plugins/AudioManager",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e12023f54ef01e75f9b85fc0b1dcfa4751d3acab"
+    },
     "com.unity.2d.animation": {
       "version": "9.2.0",
       "depth": 1,
