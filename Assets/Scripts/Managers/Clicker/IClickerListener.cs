@@ -4,6 +4,7 @@ namespace Managers.Clicker
 {
 	public interface IClickerListener
 	{
-		event Action OnUserDataChanged;
+		event Action OnEnergyDataChanged;
+		event Action<bool> OnCurrencyDataChanged;
 	}
 }

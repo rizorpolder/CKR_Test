@@ -8,13 +8,13 @@ namespace Common
 {
 	public class CooldownManager
 	{
-		int _timerCheckIntervalMs = 200;
+		int _checkIntervalMs = 200;
 
 		public static readonly DateTime DataConst = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		private readonly Dictionary<string, Cooldown> _cooldowns = new Dictionary<string, Cooldown>();
 
-		private Dictionary<string, CancellationTokenSource> _timerTasks =
+		private Dictionary<string, CancellationTokenSource> _cooldownTasks =
 			new Dictionary<string, CancellationTokenSource>();
 
 		public Cooldown SetCooldown(string id, TimeSpan delay)
@@ -33,13 +33,13 @@ namespace Common
 
 		public Cooldown GetCooldown(string id, bool createIfNotExist = true)
 		{
-			if (!HasTimer(id))
+			if (!HasCooldown(id))
 				return createIfNotExist ? CreateCooldown(id) : null;
 
 			return _cooldowns[id];
 		}
 
-		private bool HasTimer(string id)
+		private bool HasCooldown(string id)
 		{
 			return _cooldowns.ContainsKey(id);
 		}
@@ -50,11 +50,6 @@ namespace Common
 			_cooldowns.Add(id, cooldown);
 
 			return cooldown;
-		}
-
-		public void RemoveTimer(string id)
-		{
-			_cooldowns.Remove(id);
 		}
 
 		private void TryRegisterCooldown(Cooldown cooldown)
@@ -69,22 +64,22 @@ namespace Common
 
 		private bool IsAlreadyRegistered(string cooldownId)
 		{
-			return _timerTasks.ContainsKey(cooldownId);
+			return _cooldownTasks.ContainsKey(cooldownId);
 		}
 
 		private void RegisterCooldown(Cooldown cooldown)
 		{
 			var cancellation = new CancellationTokenSource();
-			_timerTasks.Add(cooldown.Id, cancellation);
+			_cooldownTasks.Add(cooldown.Id, cancellation);
 
-			StartTimer(cooldown, cancellation.Token);
+			StartCooldown(cooldown, cancellation.Token);
 		}
 
-		private async UniTask StartTimer(Cooldown cooldown, CancellationToken cancelToken)
+		private async UniTask StartCooldown(Cooldown cooldown, CancellationToken cancelToken)
 		{
 			while (!cooldown.IsComplete)
 			{
-				await UniTask.Delay(_timerCheckIntervalMs, cancellationToken: cancelToken);
+				await UniTask.Delay(_checkIntervalMs, cancellationToken: cancelToken);
 
 				if (cancelToken.IsCancellationRequested)
 					return;
@@ -95,8 +90,8 @@ namespace Common
 			if (cancelToken.IsCancellationRequested)
 				return;
 
-			_timerTasks[cooldown.Id].Dispose();
-			_timerTasks.Remove(cooldown.Id);
+			_cooldownTasks[cooldown.Id].Dispose();
+			_cooldownTasks.Remove(cooldown.Id);
 
 			try
 			{
@@ -104,8 +99,20 @@ namespace Common
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Timer {cooldown.Id} completion handler error!\n{ex.Message}");
+				Debug.LogError($"Cooldown {cooldown.Id} completion handler error!\n{ex.Message}");
 			}
+		}
+
+		public void RemoveCooldown(string id)
+		{
+			_cooldowns.Remove(id);
+
+			if (!_cooldownTasks.ContainsKey(id))
+				return;
+
+			_cooldownTasks[id].Cancel();
+			_cooldownTasks[id].Dispose();
+			_cooldownTasks.Remove(id);
 		}
 	}
 }

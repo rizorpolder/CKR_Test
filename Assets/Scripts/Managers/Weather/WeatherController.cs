@@ -13,6 +13,9 @@ namespace Managers.Weather
 {
 	public class WeatherController : ABaseController
 	{
+		private const string TIMER_KEY = "weatherRequest";
+		private const int TIMER_DELAY = 5;
+
 		[Inject] private NetworkManager _networkManager;
 		[Inject] private CooldownManager _cooldownManager;
 		[SerializeField] private WeatherView _view;
@@ -32,14 +35,14 @@ namespace Managers.Weather
 
 		private void StartTimer()
 		{
-			var delay = TimeSpan.FromSeconds(5);
-			var cooldown = _cooldownManager.SetCooldown("weatherRequest", delay);
+			var delay = TimeSpan.FromSeconds(TIMER_DELAY);
+			var cooldown = _cooldownManager.SetCooldown(TIMER_KEY, delay);
 			cooldown.Completed += cd =>
 			{
 				SendRequest();
 				StartTimer();
 			};
-			// _timer = Observable.Interval(TimeSpan.FromSeconds(5))
+			// _timer = Observable.Interval(TimeSpan.FromSeconds(TIMER_DELAY))
 			// 	.Subscribe(
 			// 		l => { SendRequest(); },
 			// 		onCompleted: StartTimer);
