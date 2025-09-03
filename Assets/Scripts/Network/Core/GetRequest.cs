@@ -16,9 +16,10 @@ namespace Network.RestApi
 			_request = new UnityWebRequest(Uri, Method);
 			_request.downloadHandler = new DownloadHandlerBuffer();
 			await _request.SendWebRequest();
-			var data = ParseResponse(_request);
+
+			var response = ParseResponse(_request);
 			NotifyComplete();
-			OnResponse?.Invoke(data);
+			OnResponse?.Invoke(response);
 		}
 
 		private Response<TResponseData> ParseResponse(UnityWebRequest request)

@@ -8,14 +8,15 @@ namespace UI.PuppiesView
 {
 	public class PuppiesEntryView : MonoBehaviour
 	{
-		public event Action<string> OnEntryClicked = _ => { };
+		public event Action<PuppiesEntryView> OnEntryClicked = (c) => { };
 
 		[SerializeField] private Button _button;
-		[SerializeField] private TextMeshProUGUI _index;
+		[SerializeField] private TextMeshProUGUI _indexText;
 		[SerializeField] private TextMeshProUGUI _description;
 		[SerializeField] private GameObject _loadingImage;
 
 		private string _itemID;
+		public string ItemID => _itemID;
 
 		private void Start()
 		{
@@ -25,14 +26,19 @@ namespace UI.PuppiesView
 		public void Initialize(int index, PuppiesEntry data)
 		{
 			_itemID = data.id;
-			_index.text = index.ToString();
+			_indexText.text = index.ToString();
 			_description.text = data.attributes.name;
 		}
 
 		private void OnClickButtonHandler()
 		{
-			OnEntryClicked.Invoke(_itemID);
+			OnEntryClicked.Invoke(this);
 			_loadingImage.SetActive(true);
+		}
+
+		public void StopLoading()
+		{
+			_loadingImage.SetActive(false);
 		}
 	}
 }

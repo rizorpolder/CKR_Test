@@ -58,7 +58,7 @@ namespace Managers.Puppies
 				{
 					if (window is not InfoPopup infoPopup)
 						return;
-
+					_view.StopLoading();
 					var itemName = obj.Data.PuppiesData.data.attributes.name;
 					var itemDescr = obj.Data.PuppiesData.data.attributes.description;
 					infoPopup.Initialize(itemName, itemDescr);

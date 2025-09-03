@@ -21,14 +21,7 @@ namespace Contexts
 
 		private void OnButtonClickHandler()
 		{
-			_windowsController.Show(WindowType.InfoPupup,
-				window =>
-				{
-					if (window is InfoPopup infoPopup)
-					{
-						infoPopup.Initialize("Test", "Test");
-					}
-				});
+
 		}
 	}
 }

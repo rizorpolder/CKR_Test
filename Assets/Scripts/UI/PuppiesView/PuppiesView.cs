@@ -13,6 +13,8 @@ namespace UI.PuppiesView
 
 		[SerializeField] private GameObject _loadingView;
 
+		private PuppiesEntryView _pendingEntry = null;
+
 		public void Initialize()
 		{
 			InitializePool();
@@ -27,11 +29,22 @@ namespace UI.PuppiesView
 				var entry = data.data[index];
 				var item = GetItem();
 				item.Initialize(index + 1, entry);
-				item.OnEntryClicked += OnEntryClicked;
+				item.OnEntryClicked += OnEntryItemCalled;
 			}
 
 			if (_loadingView.activeSelf)
 				_loadingView.SetActive(false);
+		}
+
+		private void OnEntryItemCalled(PuppiesEntryView entry)
+		{
+			if (_pendingEntry)
+			{
+				StopLoading();
+			}
+
+			_pendingEntry = entry;
+			OnEntryClicked?.Invoke(entry.ItemID);
 		}
 
 		private void UnsubscribeEvents()
@@ -39,7 +52,7 @@ namespace UI.PuppiesView
 			var items = this.GetActiveItems();
 			foreach (var puppiesEntry in items)
 			{
-				puppiesEntry.OnEntryClicked -= OnEntryClicked;
+				puppiesEntry.OnEntryClicked -= OnEntryItemCalled;
 			}
 		}
 
@@ -48,6 +61,12 @@ namespace UI.PuppiesView
 			UnsubscribeEvents();
 			ResetPool();
 			_loadingView.SetActive(true);
+		}
+
+		public void StopLoading()
+		{
+			_pendingEntry?.StopLoading();
+			_pendingEntry = null;
 		}
 	}
 }

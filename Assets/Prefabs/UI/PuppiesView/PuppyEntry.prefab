@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3462039330092886250}
-  _index: {fileID: 2538173003834666076}
+  _indexText: {fileID: 2538173003834666076}
   _description: {fileID: 31194059442531600}
   _loadingImage: {fileID: 2743336717171687515}
 --- !u!114 &1177245683602297592

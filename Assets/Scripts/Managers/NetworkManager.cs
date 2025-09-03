@@ -1,62 +1,69 @@
 using System.Collections.Generic;
 using Network.RestApi;
 
-public class NetworkManager
+namespace Managers
 {
-	private readonly List<ARequest> _queue = new();
-
-	private ARequest _runningRequest;
-	private bool _isQueueEmpty => _queue.Count == 0;
-
-	public void Add(ARequest request)
+	public class NetworkManager
 	{
-		_queue.Add(request);
-		if (_runningRequest == null)
+		private readonly List<ARequest> _queue = new();
+
+		private ARequest _runningRequest;
+		private bool _isQueueEmpty => _queue.Count == 0;
+
+		public void Add(ARequest request)
+		{
+			_queue.Add(request);
+			if (_runningRequest == null)
+			{
+				Run();
+			}
+		}
+
+		public void Remove(ARequest request)
+		{
+			var result = _queue.Remove(request);
+
+			if (result)
+				return;
+
+			if (_runningRequest == null || !_runningRequest.Equals(request))
+				return;
+
+			_runningRequest.Abort();
+			_runningRequest = null;
 			Run();
-	}
+		}
 
-	public void Remove(ARequest request)
-	{
-		var result = _queue.Remove(request);
-		if (!result)
-			return;
+		public void Terminate()
+		{
+			_queue.Clear();
+			_runningRequest.Abort();
+		}
 
-		if (_runningRequest == null || !_runningRequest.Equals(request))
-			return;
+		private void Run()
+		{
+			if (_isQueueEmpty)
+				return;
 
-		_runningRequest.Abort();
-		_runningRequest = null;
-		Run();
-	}
+			if (_queue.Count <= 0)
+				return;
 
-	public void Terminate()
-	{
-		_queue.Clear();
-		_runningRequest.Abort();
-	}
+			if (_runningRequest != null)
+				return;
 
-	private async void Run()
-	{
-		if (_isQueueEmpty)
-			return;
+			var request = _queue[0];
+			_queue.RemoveAt(0);
 
-		if (_queue.Count <= 0)
-			return;
+			request.AddReceivedHandler(OnRequestCompleted);
+			_runningRequest = request;
 
-		if (_runningRequest != null)
-			return;
+			request.Make();
+		}
 
-		var request = _queue[0];
-		_queue.RemoveAt(0);
-
-		request.AddReceivedHandler(OnRequestCompleted);
-		_runningRequest = request;
-		request.Make();
-	}
-
-	private void OnRequestCompleted(ARequest obj)
-	{
-		_runningRequest = null;
-		Run();
+		private void OnRequestCompleted(ARequest obj)
+		{
+			_runningRequest = null;
+			Run();
+		}
 	}
 }
