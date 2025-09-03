@@ -1,9 +1,11 @@
 using System;
+using AudioManager.Runtime.Core.Manager;
 using DG.Tweening;
 using Managers.Clicker;
 using UI.Clicker.UI.HUD;
 using UnityEngine;
 using UnityEngine.UI;
+using VFX;
 using Zenject;
 
 namespace UI.Clicker.UI
@@ -14,12 +16,14 @@ namespace UI.Clicker.UI
 		[SerializeField] private AResourcePanel _currencyPanel;
 		[SerializeField] private Button _collectButton;
 		[SerializeField] private ParticleSystem _particles;
+		[SerializeField] private CurrencyPool _currencyPool;
 
 		[Inject] private IClickerListener _clickerListener;
 		[Inject] private IClickerCommand _clickerCommand;
 		[Inject] private IClickerData _clickerData;
 
 		private Sequence _tween;
+
 		private void Start()
 		{
 			_collectButton.onClick.AddListener(OnButtonClickHandler);
@@ -38,6 +42,13 @@ namespace UI.Clicker.UI
 		private void OnViewStateChanged(bool value)
 		{
 			gameObject.SetActive(value);
+
+			if (!value)
+			{
+				_particles.Stop();
+				_tween?.Kill();
+				_currencyPool.Stop();
+			}
 		}
 
 		private void OnEnergyDataChanged()
@@ -45,16 +56,15 @@ namespace UI.Clicker.UI
 			_energyPanel.SetResourceText(_clickerData.UserEnergy);
 		}
 
-
 		// beware of magic numbers (:
 		private void OnCurrencyDataChanged()
 		{
 			_currencyPanel.SetResourceText(_clickerData.UserCurrency);
 			_particles.Emit(10);
 			PlayButtonAnimation();
-			//Emit from pool currency
+			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.coin.ToString());
+			_currencyPool.Emit();
 		}
-
 
 		// beware of magic numbers (:
 		private void PlayButtonAnimation()
@@ -71,7 +81,6 @@ namespace UI.Clicker.UI
 		private void OnButtonClickHandler()
 		{
 			_clickerCommand.AddCurrency();
-
 		}
 	}
 }

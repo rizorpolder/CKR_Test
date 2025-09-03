@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AudioManager.Runtime.Core.Manager;
 using Managers.Base;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,6 +62,7 @@ namespace Managers
 
 		private void OnButtonClickHandler()
 		{
+			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.click.ToString());
 			OnButtonClicked?.Invoke(_index);
 		}
 

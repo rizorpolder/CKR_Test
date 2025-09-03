@@ -1,4 +1,5 @@
 using System;
+using AudioManager.Runtime.Core.Manager;
 using Common;
 using Network.ApiData.Dogs;
 using UnityEngine;
@@ -44,6 +45,7 @@ namespace UI.PuppiesView
 			}
 
 			_pendingEntry = entry;
+			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.click.ToString());
 			OnEntryClicked?.Invoke(entry.ItemID);
 		}
 

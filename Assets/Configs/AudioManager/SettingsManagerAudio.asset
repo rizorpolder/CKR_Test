@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98dc6a7385584d7ea1e71839d72e5940, type: 3}
+  m_Name: SettingsManagerAudio
+  m_EditorClassIdentifier: 
+  MusicVolumeKey: MusicVolume
+  SoundVolumeKey: SoundsVolume
+  soundsPath: Audio/
+  saveDataPath: Configs/AudioManager
+  tAudioPath: Scripts/External/AudioManager
+  audioFilesJson: {fileID: 4900000, guid: 833dcbd9947a57145a399c8482826fb8, type: 3}
+  audioMixerDefaultGroup: {fileID: -7908132623044394951, guid: 0b2ab970639af4a46a1eb60f959033ee, type: 2}
+  audioMixer: {fileID: 24100000, guid: 0b2ab970639af4a46a1eb60f959033ee, type: 2}
+  isEnableMusicOnStart: 1
+  isEnabledDynamicListener: 0
+  metaMusic: []
+  coreMusic: []
+  ambientSounds: []
+  soundsAssets:
+  - {fileID: 11400000, guid: eab98a134e7c01e4495d483eef6f9c00, type: 2}
+  - {fileID: 11400000, guid: f5fbc6bde8e551946825ec979177b49b, type: 2}
+  - {fileID: 11400000, guid: bcd0164dd1dd78343ab1349d1a47631c, type: 2}
+  - {fileID: 11400000, guid: 1ed88b4f4f9590e4f8ba1239b1129781, type: 2}
+  - {fileID: 11400000, guid: 84b281c882d7dfc45aca7765c4b9003c, type: 2}
+  emotionsSounds: []
+  <CanPlayUnfocused>k__BackingField: 1

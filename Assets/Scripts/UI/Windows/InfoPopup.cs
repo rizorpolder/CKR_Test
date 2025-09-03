@@ -1,3 +1,4 @@
+using AudioManager.Runtime.Core.Manager;
 using Common;
 using TMPro;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace UI.Windows
 
 		private void OkButtonClickHandler()
 		{
+			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.click.ToString());
 			this.Close();
 		}
 	}
