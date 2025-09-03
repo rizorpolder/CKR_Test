@@ -8,8 +8,8 @@ namespace Managers
 {
 	public class WindowsController : MonoBehaviour
 	{
-		[Inject] WindowsConfig _windowsConfig;
-		[Inject] DiContainer _container;
+		[Inject] private WindowsConfig _windowsConfig;
+		[Inject] private DiContainer _container;
 
 		[SerializeField] private Transform parent;
 

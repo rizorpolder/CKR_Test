@@ -72,7 +72,7 @@ namespace Common
 			var cancellation = new CancellationTokenSource();
 			_cooldownTasks.Add(cooldown.Id, cancellation);
 
-			StartCooldown(cooldown, cancellation.Token);
+			_ = StartCooldown(cooldown, cancellation.Token);
 		}
 
 		private async UniTask StartCooldown(Cooldown cooldown, CancellationToken cancelToken)

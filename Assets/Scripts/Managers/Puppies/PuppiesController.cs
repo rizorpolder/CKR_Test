@@ -10,8 +10,8 @@ namespace Managers.Puppies
 {
 	public class PuppiesController : ABaseController
 	{
-		[Inject] NetworkManager _networkManager;
-		[Inject] WindowsController _windowsController;
+		[Inject] private NetworkManager _networkManager;
+		[Inject] private WindowsController _windowsController;
 		[SerializeField] private PuppiesView _view;
 
 		private GetPuppiesListRequest _dataListRequest;
@@ -71,15 +71,20 @@ namespace Managers.Puppies
 			_networkManager.Add(_dataListRequest);
 		}
 
-		public override void Disable()
+		private void Clear()
 		{
-			_view.gameObject.SetActive(false);
+			_view?.gameObject.SetActive(false);
 			if (_lastCalledInfoReq != null)
 			{
 				_networkManager?.Remove(_lastCalledInfoReq);
 			}
 
-			_view.ResetState();
+			_view?.ResetState();
+		}
+
+		public override void Disable()
+		{
+			Clear();
 		}
 	}
 }

@@ -13,17 +13,15 @@ namespace Managers.Weather
 {
 	public class WeatherController : ABaseController
 	{
-		private const string TIMER_KEY = "weatherRequest";
 		private const int TIMER_DELAY = 5;
 
 		[Inject] private NetworkManager _networkManager;
-		[Inject] private CooldownManager _cooldownManager;
 		[SerializeField] private WeatherView _view;
 
 		private WeatherIconsCache _iconsCache;
 		private GetWeatherRequest _weatherRequest;
 
-		// private IDisposable _timer;
+		private IDisposable _timer;
 
 		private void Start()
 		{
@@ -35,17 +33,14 @@ namespace Managers.Weather
 
 		private void StartTimer()
 		{
-			var delay = TimeSpan.FromSeconds(TIMER_DELAY);
-			var cooldown = _cooldownManager.SetCooldown(TIMER_KEY, delay);
-			cooldown.Completed += cd =>
-			{
-				SendRequest();
-				StartTimer();
-			};
-			// _timer = Observable.Interval(TimeSpan.FromSeconds(TIMER_DELAY))
-			// 	.Subscribe(
-			// 		l => { SendRequest(); },
-			// 		onCompleted: StartTimer);
+			_timer = Observable.Interval(TimeSpan.FromSeconds(TIMER_DELAY))
+				.Subscribe(
+					l => { SendRequest(); },
+					onCompleted: () =>
+					{
+						_timer.Dispose();
+						StartTimer();
+					});
 		}
 
 		private void SendRequest()
@@ -84,13 +79,17 @@ namespace Managers.Weather
 			StartTimer();
 		}
 
+		private void Clear()
+		{
+			_view?.gameObject.SetActive(false);
+			_timer?.Dispose();
+			_networkManager?.Remove(_weatherRequest);
+			_view?.ResetState();
+		}
+
 		public override void Disable()
 		{
-			_view.gameObject.SetActive(false);
-
-			//_timer?.Dispose();
-			_networkManager?.Remove(_weatherRequest);
-			_view.ResetState();
+			Clear();
 		}
 	}
 }

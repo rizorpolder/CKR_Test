@@ -21,7 +21,7 @@ namespace Managers
 				view.OnButtonClicked += EnableView;
 			}
 
-			//_views[0].Enable();
+			_views[_enabledView].Enable();
 		}
 
 		private void EnableView(int index)

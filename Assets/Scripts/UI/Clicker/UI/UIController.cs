@@ -20,21 +20,31 @@ namespace UI.Clicker.UI
 		private void Start()
 		{
 			_collectButton.onClick.AddListener(OnButtonClickHandler);
+			_clickerListener.OnDataUpdated += UpdateView;
 			_clickerListener.OnCurrencyDataChanged += OnCurrencyDataChanged;
 			_clickerListener.OnEnergyDataChanged += OnEnergyDataChanged;
+			_clickerListener.OnStateChanged += OnViewStateChanged;
+		}
+
+		private void UpdateView()
+		{
+			_energyPanel.SetResourceText(_clickerData.UserEnergy);
+			_currencyPanel.SetResourceText(_clickerData.UserCurrency);
+		}
+
+		private void OnViewStateChanged(bool value)
+		{
+			gameObject.SetActive(value);
 		}
 
 		private void OnEnergyDataChanged()
 		{
-			_energyPanel.SetResourceText(_clickerData.UserCurrency);
+			_energyPanel.SetResourceText(_clickerData.UserEnergy);
 		}
 
-		private void OnCurrencyDataChanged(bool needVFX)
+		private void OnCurrencyDataChanged()
 		{
 			_currencyPanel.SetResourceText(_clickerData.UserCurrency);
-			if (!needVFX)
-				return;
-
 			//TODO Create VFX and DoTween item;
 		}
 

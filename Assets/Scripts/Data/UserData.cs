@@ -12,9 +12,15 @@ namespace Data
 
 		private int _energyMaxValue;
 
-		public void AddEnergy(int energyValue)
+		public UserData(int currencyValue, int energyValue)
 		{
-			_energyValue += energyValue;
+			_energyValue = energyValue;
+			_currencyValue = currencyValue;
+		}
+
+		public void SetEnergy(int energyValue)
+		{
+			_energyValue = energyValue;
 		}
 
 		public void AddCurrency(int currencyValue)
