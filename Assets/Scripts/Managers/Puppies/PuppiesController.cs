@@ -80,6 +80,11 @@ namespace Managers.Puppies
 			}
 
 			_view?.ResetState();
+
+			if (_windowsController.HasActiveWindows)
+			{
+				_windowsController.HideAllWindows();
+			}
 		}
 
 		public override void Disable()

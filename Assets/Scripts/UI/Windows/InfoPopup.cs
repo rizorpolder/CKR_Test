@@ -25,7 +25,7 @@ namespace UI.Windows
 
 		private void OkButtonClickHandler()
 		{
-			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.click.ToString());
+			_managerAudio.PlayAudioClip(TAudio.click.ToString());
 			this.Close();
 		}
 	}

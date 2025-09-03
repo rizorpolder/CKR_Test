@@ -31,5 +31,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bcd0164dd1dd78343ab1349d1a47631c, type: 2}
   - {fileID: 11400000, guid: 1ed88b4f4f9590e4f8ba1239b1129781, type: 2}
   - {fileID: 11400000, guid: 84b281c882d7dfc45aca7765c4b9003c, type: 2}
+  - {fileID: 11400000, guid: 366692baee579414db4d3be1243f067d, type: 2}
   emotionsSounds: []
   <CanPlayUnfocused>k__BackingField: 1

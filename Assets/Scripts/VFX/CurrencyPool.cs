@@ -1,4 +1,3 @@
-using System;
 using Common;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace VFX
 
 		private void Start()
 		{
-			InitializePool(10);
+			InitializePool();
 		}
 
 		public void Emit()
@@ -33,6 +32,7 @@ namespace VFX
 			foreach (var effect in items)
 			{
 				effect.Stop();
+				ReturnToPool(effect);
 			}
 		}
 	}

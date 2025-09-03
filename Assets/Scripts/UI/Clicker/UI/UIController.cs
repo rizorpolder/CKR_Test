@@ -18,6 +18,7 @@ namespace UI.Clicker.UI
 		[SerializeField] private ParticleSystem _particles;
 		[SerializeField] private CurrencyPool _currencyPool;
 
+		[Inject] private ManagerAudio _managerAudio;
 		[Inject] private IClickerListener _clickerListener;
 		[Inject] private IClickerCommand _clickerCommand;
 		[Inject] private IClickerData _clickerData;
@@ -46,6 +47,7 @@ namespace UI.Clicker.UI
 			if (!value)
 			{
 				_particles.Stop();
+				_particles.Clear();
 				_tween?.Kill();
 				_currencyPool.Stop();
 			}
@@ -62,7 +64,7 @@ namespace UI.Clicker.UI
 			_currencyPanel.SetResourceText(_clickerData.UserCurrency);
 			_particles.Emit(10);
 			PlayButtonAnimation();
-			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.coin.ToString());
+			_managerAudio.PlayAudioClip(TAudio.coin.ToString());
 			_currencyPool.Emit();
 		}
 

@@ -3,6 +3,7 @@ using AudioManager.Runtime.Core.Manager;
 using Common;
 using Network.ApiData.Dogs;
 using UnityEngine;
+using Zenject;
 
 namespace UI.PuppiesView
 {
@@ -13,6 +14,8 @@ namespace UI.PuppiesView
 		public Action<string> OnEntryClicked;
 
 		[SerializeField] private GameObject _loadingView;
+
+		[Inject] private ManagerAudio _managerAudio;
 
 		private PuppiesEntryView _pendingEntry = null;
 
@@ -45,7 +48,7 @@ namespace UI.PuppiesView
 			}
 
 			_pendingEntry = entry;
-			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.click.ToString());
+			_managerAudio.PlayAudioClip(TAudio.click.ToString());
 			OnEntryClicked?.Invoke(entry.ItemID);
 		}
 

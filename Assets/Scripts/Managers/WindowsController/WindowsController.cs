@@ -13,6 +13,9 @@ namespace Managers
 
 		[SerializeField] private Transform parent;
 
+		public bool HasActiveWindows => _activeWindows.Count > 0;
+
+
 		private List<WindowInstance> _activeWindows = new List<WindowInstance>();
 
 		private WindowsFactory _factory;
@@ -80,6 +83,8 @@ namespace Managers
 			if (window == null || window.Window == null)
 				return;
 
+			if (window.Window.Status == WindowStatus.Hidden)
+				return;
 
 			Hide(window);
 		}
@@ -90,6 +95,14 @@ namespace Managers
 				return;
 
 			window.Window.Hide(() => { _factory.DestroyWindow(window); });
+		}
+
+		public void HideAllWindows()
+		{
+			foreach (var windowInstance in _activeWindows)
+			{
+				HideWindow(windowInstance);
+			}
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using AudioManager.Runtime.Core.Manager;
 using Common;
 using Managers;
 using Managers.Clicker;
@@ -10,7 +11,7 @@ namespace Contexts
 	{
 		[SerializeField] private WindowsController _windowsController;
 		[SerializeField] private ClickerController _clickerController;
-
+		[SerializeField] private ManagerAudio _managerAudio;
 		public override void InstallBindings()
 		{
 			Container.Bind<NetworkManager>().AsSingle();
@@ -19,6 +20,7 @@ namespace Contexts
 			Container.Bind<IClickerCommand>().To<ClickerController>().FromInstance(_clickerController);
 			Container.Bind<IClickerData>().To<ClickerController>().FromInstance(_clickerController);
 			Container.Bind<WindowsController>().FromInstance(_windowsController).AsSingle();
+			Container.Bind<ManagerAudio>().FromInstance(_managerAudio).AsSingle();
 		}
 	}
 }

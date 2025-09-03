@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using AudioManager.Runtime.Core.Manager;
 using Managers.Base;
+using Managers.Clicker;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Managers
 {
 	public class MainManager : MonoBehaviour
 	{
 		[SerializeField] List<ViewWrapper> _views;
-
+		[Inject] private ManagerAudio _managerAudio;
 		private int _enabledView = 0;
 
 		private void Start()
@@ -27,6 +29,9 @@ namespace Managers
 
 		private void EnableView(int index)
 		{
+			_managerAudio.PlayAudioClip(TAudio.click.ToString());
+
+
 			if (_enabledView == index)
 				return;
 
@@ -62,7 +67,6 @@ namespace Managers
 
 		private void OnButtonClickHandler()
 		{
-			ManagerAudio.SharedInstance.PlayAudioClip(TAudio.click.ToString());
 			OnButtonClicked?.Invoke(_index);
 		}
 
